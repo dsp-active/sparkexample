@@ -1,2 +1,2 @@
-* docker build -t giantswarm/sparkexample .
-* docker run giantswarm/sparkexample
+* docker pull dsp-active/sparkexample
+* docker run -dit --name spark dsp-active/sparkexample
