@@ -1,14 +1,10 @@
 FROM java:8
 
-RUN apt-get update
-RUN apt-get install -y maven
-
-ADD . /code
-
 WORKDIR /code
+ADD pom.xml /code/pom.xml
+ADD src /code/src
 
-RUN ["mvn", "clean", "install"]
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/* && ["mvn", "dependency:resolve"] && ["mvn", "verify"] && ["mvn", "package"]
 
 EXPOSE 4567
-
-CMD ["java", "-jar", "target/sparkexample-jar-with-dependencies.jar"]
+CMD ["/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java", "-jar", "target/spark-jar-with-dependencies.jar"]
